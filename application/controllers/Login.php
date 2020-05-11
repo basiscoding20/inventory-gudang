@@ -12,10 +12,7 @@
 	
 		public function index()
 		{
-			$this->load->view('partials/01head');
 			$this->load->view('login');
-			$this->load->view('partials/06plugin');
-			$this->load->view('services/login');
 		}
 
 		public function masuk()
@@ -45,11 +42,13 @@
 				$response = array(
 					'status' => 'sukses',
 					'message' => 'Anda Berhasil Login',
+					'redirect' => base_url($this->session->userdata('link').'/Dashboard'),
 					);
 			}else{
 				$response = array(
 					'status' => 'gagal',
 					'message' => 'Username Atau Password yang anda masukan salah !',
+					'redirect' => base_url('login')
 					);
 			};
 

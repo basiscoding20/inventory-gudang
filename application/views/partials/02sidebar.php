@@ -1,28 +1,71 @@
-<body class="">
-  <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="<?= base_url('assets') ?>/assets/img/sidebar-1.jpg">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+<body class="fixed-sn white-skin">
 
-        Tip 2: you can also add an image using data-image tag
-    -->
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
-        </a></div>
-      <div class="sidebar-wrapper">
-        <ul class="nav">
+  <!-- Main Navigation -->
+  <header>
 
-        <?php 
-          $result = $this->db->get_where('menus', array('level_menu' => $this->session->userdata('level'), 'sub_menu' => 0));
-          foreach ($result->result() as $main) {?>
-               <li class="nav-item <?= $this->uri->segment(2) == $main->link ? 'active' : '' ?>">
-                  <a class="nav-link" href="<?= base_url($this->session->userdata('link').'/'.$main->link) ?>">
-                    <i class="material-icons"><?= $main->icon ?></i>
-                    <p><?= $main->nama_menu ?></p>
+    <!-- Sidebar navigation -->
+    <div id="slide-out" class="side-nav sn-bg-4 fixed">
+      <ul class="custom-scrollbar">
+
+        <!-- Logo -->
+        <li class="logo-sn waves-effect py-3">
+          <div class="text-center">
+            <a href="<?= base_url('assets') ?>/html/dashboards/v-2.html" target="_blank" class="pl-0"><img src="<?= base_url('assets/img/logo.png') ?>"></a>
+          </div>
+        </li>
+
+        <!-- Search Form -->
+        <li>
+          <form class="search-form" role="search">
+            <div class="md-form mt-0 waves-light">
+              <input type="text" class="form-control py-2" placeholder="Search">
+            </div>
+          </form>
+        </li>
+
+        <!-- Side navigation links -->
+        <li>
+          <ul class="collapsible collapsible-accordion">
+
+            <?php
+
+                $main_menu = $this->db->get_where('menus', 
+                                          array('sub_menu' => 0, 'level_menu' => $this->session->userdata('level')));
+                foreach ($main_menu->result() as $main) {
+
+                  $sub_menu = $this->db->get_where('menus', 
+                                          array('sub_menu' => $main->id, 'level_menu' => $this->session->userdata('level')));
+
+              if ($sub_menu->num_rows() > 0) {?>
+                <li>
+                  <a class="collapsible-header waves-effect arrow-r">
+                    <i class="w-fa <?= $main->icon ?>"></i><?= $main->nama_menu ?><i class="fas fa-angle-down rotate-icon"></i>
                   </a>
+                  <div class="collapsible-body">
+
+                    <ul>
+                      <?php foreach ($sub_menu->result() as $sub) {?>
+                        <li>
+                          <a href="<?= base_url($this->session->userdata('link')) ?>/<?= $sub->link ?>" class="waves-effect"><?= $sub->nama_menu ?></a>
+                        </li>
+                      <?php } ?>
+                    </ul>
+                  </div>
                 </li>
-        <?php } ?>
-                      
-        </ul>
-      </div>
+              <?php } else { ?>
+                <li>
+                  <a href="<?= base_url($this->session->userdata('link')) ?>/<?= $main->link ?>" class="collapsible-header waves-effect"><i
+                  class="w-fa <?= $main->icon ?>"></i><?= $main->nama_menu ?></a>
+                </li>
+              <?php }
+              }
+            ?>
+
+          </ul>
+        </li>
+        <!-- Side navigation links -->
+
+      </ul>
+      <div class="sidenav-bg mask-strong"></div>
     </div>
+    <!-- Sidebar navigation -->

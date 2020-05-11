@@ -1,64 +1,50 @@
-<!--   Core JS Files   -->
-  <script src="<?= base_url('assets') ?>/assets/js/core/jquery.min.js"></script>
-  <script src="<?= base_url('assets') ?>/assets/js/core/popper.min.js"></script>
-  <script src="<?= base_url('assets') ?>/assets/js/core/bootstrap-material-design.min.js"></script>
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script src="<?= base_url('assets') ?>/js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="<?= base_url('assets') ?>/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="<?= base_url('assets') ?>/js/bootstrap.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="<?= base_url('assets') ?>/js/mdb.min.js"></script>
+  <!-- Datatables -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.js"></script>
 
-  <!-- Plugin for the momentJs  -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/moment.min.js"></script>
-  
-  <!--  Plugin for Sweet Alert -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/sweetalert2.js"></script>
-  
-  <!-- Forms Validations Plugin -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/jquery.validate.min.js"></script>
-  
-  <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/jquery.bootstrap-wizard.js"></script>
-  
-  <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/bootstrap-selectpicker.js"></script>
-  
-  <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
-  
-  <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/jquery.dataTables.min.js"></script>
-  
-  <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/bootstrap-tagsinput.js"></script>
-  
-  <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/jasny-bootstrap.min.js"></script>
-  
-  <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/fullcalendar.min.js"></script>
-  
-  <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/jquery-jvectormap.js"></script>
-  
-  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/nouislider.min.js"></script>
-  
-  <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-  
-  <!-- Library for adding dinamically elements -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/arrive.min.js"></script>
-    
-  <!-- Chartist JS -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/chartist.min.js"></script>
-  
-  <!--  Notifications Plugin    -->
-  <script src="<?= base_url('assets') ?>/assets/js/plugins/bootstrap-notify.js"></script>
-  
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="<?= base_url('assets') ?>/assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
-  
+  <!-- Initializations -->
   <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
+    // $('footer, .card').toggleClass('dark-card-admin');
+    // $('body, .navbar').toggleClass('white-skin navy-blue-skin');
+    // $(this).toggleClass('white text-dark btn-outline-black');
+    // $('body').toggleClass('dark-bg-admin');
+    // $('h6, .card, p, td, th, i, li a, h4, input, label').not(
+    //   '#slide-out i, #slide-out a, .dropdown-item i, .dropdown-item').toggleClass('text-white');
+    // $('.btn-dash').toggleClass('grey blue').toggleClass('lighten-3 darken-3');
+    // $('.gradient-card-header').toggleClass('white black lighten-4');
+    // $('.list-panel a').toggleClass('navy-blue-bg-a text-white').toggleClass('list-group-border');
 
+    // SideNav Initialization
+    $(".button-collapse").sideNav();
+
+    var container = document.querySelector('.custom-scrollbar');
+    var ps = new PerfectScrollbar(container, {
+      wheelSpeed: 2,
+      wheelPropagation: true,
+      minScrollbarLength: 20
     });
+
+    // Data Picker Initialization
+    $('.datepicker').pickadate();
+
+    // Material Select Initialization
+    $(document).ready(function () {
+      $('.mdb-select').material_select();
+    });
+
+    // Tooltips Initialization
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
   </script>
