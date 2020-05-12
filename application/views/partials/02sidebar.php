@@ -1,5 +1,5 @@
 <body class="fixed-sn white-skin">
-
+  
   <!-- Main Navigation -->
   <header>
 
@@ -38,7 +38,7 @@
 
               if ($sub_menu->num_rows() > 0) {?>
                 <li>
-                  <a class="collapsible-header waves-effect arrow-r">
+                  <a class="collapsible-header waves-effect arrow-r ">
                     <i class="w-fa <?= $main->icon ?>"></i><?= $main->nama_menu ?><i class="fas fa-angle-down rotate-icon"></i>
                   </a>
                   <div class="collapsible-body">
@@ -54,7 +54,7 @@
                 </li>
               <?php } else { ?>
                 <li>
-                  <a href="<?= base_url($this->session->userdata('link')) ?>/<?= $main->link ?>" class="collapsible-header waves-effect"><i
+                  <a href="<?= base_url($this->session->userdata('link')) ?>/<?= $main->link ?>" class=" <?= $this->uri->segment(4) == $main->link ?'active':'' ?> collapsible-header waves-effect"><i
                   class="w-fa <?= $main->icon ?>"></i><?= $main->nama_menu ?></a>
                 </li>
               <?php }
