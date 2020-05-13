@@ -47,7 +47,7 @@
                     <th class="th-lg align-middle"><a href="">Nama Barang</a></th>
                     <th class=" align-middle"><a href="">Jumlah</a></th>
                     <th class=" align-middle"><a href="">Ukuran</a></th>
-                    <th class=" align-middle"><a href="">Tanggal Masuk</a></th>
+                    <th class=" align-middle"><a href="">Tanggal Pengajuan</a></th>
                     <th class="th-lg align-middle"><a href="">Status</a></th>
                   </tr>
                 </thead>
@@ -59,14 +59,14 @@
                   foreach ($pengajuan_barang_keluar as $pbm) {?>
                   <tr>
                     <td class="text-center">
-                      <button class="btn btn-sm m-0 btn-primary validasi" data-kode="<?= $pbm->kode_barang_keluar ?>" data-quantity="<?= $pbm->quantity ?>"><span class="fas fa-check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Keluarkan Barang"></span></button>
+                      <button class="btn btn-sm m-0 btn-primary validasi" data-kode="<?= $pbm->kode_barang_masuk ?>" data-quantity="<?= $pbm->quantity ?>"><span class="fas fa-check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Keluarkan Barang"></span></button>
                     </td>
-                    <td><?= $pbm->kode_barang_keluar ?></td>
+                    <td><?= $pbm->kode_barang_masuk ?></td>
                     <td><?= $pbm->nama_barang ?></td>
                     <td><?= $pbm->quantity ?></td>
                     <td><?= $pbm->size ?></td>
                     <td><?= date('d M Y', strtotime($pbm->created_at)) ?></td>
-                    <td class="<?php if($pbm->status == 0){ echo "stylish-color-dark white-text";}if($pbm->status == 1){echo "success-color-dark white-text";}else{echo "primary-color-dark white-text";} ?>"><?= $pbm->status_barang ?></td>
+                    <td class="<?php if($pbm->status_gudang == 4){ echo "warning-color-dark white-text";}if($pbm->status_gudang == 1){echo "success-color-dark white-text";}else{echo "primary-color-dark white-text";} ?>"><?= $pbm->status_barang ?></td>
                   </tr>
                   <?php } ?>
                 </tbody>
@@ -85,7 +85,7 @@
 
 </main>
 
-<div class="modal fade" id="modalValidasiBarangKeluar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-modal="true">
+<div class="modal fade" id="modalKeluarkanBarang" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-modal="true">
   <div class="modal-dialog modal-sm cascading-modal" role="document">
     <!-- Content -->
     <div class="modal-content">

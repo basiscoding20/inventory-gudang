@@ -47,7 +47,7 @@
                     <th class="th-lg align-middle"><a href="">Nama Barang</a></th>
                     <th class=" align-middle"><a href="">Jumlah</a></th>
                     <th class=" align-middle"><a href="">Ukuran</a></th>
-                    <th class=" align-middle"><a href="">Tanggal Masuk</a></th>
+                    <th class=" align-middle"><a href="">Tanggal Pengajuan</a></th>
                     <th class="th-lg align-middle"><a href="">Status</a></th>
                   </tr>
                 </thead>

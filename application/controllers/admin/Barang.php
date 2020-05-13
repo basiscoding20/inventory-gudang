@@ -56,7 +56,7 @@ class Barang extends CI_Controller {
 // Barang Gudang
 	public function barang_masuk()
 	{
-		$data['pengajuan_barang_masuk'] = $this->BarangModel->barang_masuk();
+		$data['barang_masuk'] = $this->BarangModel->barang_masuk();
 		$this->load->view('partials/01head');
 		$this->load->view('partials/02sidebar');
 		$this->load->view('partials/03navbar');
@@ -88,19 +88,19 @@ class Barang extends CI_Controller {
 		$kode_barang = $this->input->post('kode_barang');
 		$jumlah = $this->input->post('quantity');
 
-		$result['barang_keluar'] = $this->BarangModel->add_barang_gudang($data);
-		$result['barang_gudang'] = $this->BarangModel->validasi_barang_masuk($kode_barang, $jumlah);
+		$result['barang_keluar'] = $this->BarangModel->add_barang_keluar($data);
+		$result['barang_gudang'] = $this->BarangModel->keluarkan_barang_gudang($kode_barang, $jumlah);
 
 		if ($result) {
 			$response = array(
 					'status' => 'sukses',
-					'message' => 'Barang Berhasil di Validasi',
+					'message' => 'Barang Berhasil di Keluarkan',
 					'redirect' => base_url($this->session->userdata('link').'/Barang/pengajuan_barang_keluar'),
 					);
 		}else{
 			$response = array(
 					'status' => 'gagal',
-					'message' => 'Barang Gagal di Validasi',
+					'message' => 'Barang Gagal di Keluarkan',
 					'redirect' => base_url($this->session->userdata('link').'/Barang/pengajuan_barang_keluar'),
 					);
 		}
@@ -108,6 +108,19 @@ class Barang extends CI_Controller {
 		echo json_encode($response);
 
 	}	
+
+// Barang Keluar
+	public function barang_keluar()
+	{
+		$data['barang_keluar'] = $this->BarangModel->barang_keluar();
+		$this->load->view('partials/01head');
+		$this->load->view('partials/02sidebar');
+		$this->load->view('partials/03navbar');
+		$this->load->view('admin/barang_keluar', $data);
+		$this->load->view('partials/05footer');
+		$this->load->view('partials/06plugin');
+		$this->load->view('services/barang_keluar');
+	}
 
 }
 

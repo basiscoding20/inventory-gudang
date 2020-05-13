@@ -12,7 +12,6 @@ class BarangModel extends CI_Model {
 			CASE 
 			WHEN status = 0 THEN "Belum Masuk" 
 			WHEN status = 1 THEN "Sudah Masuk" 
-			WHEN status = 2 THEN "Sudah Keluar"
 			WHEN status = 3 THEN "Return"
 			END as status_barang', false
 		);
@@ -49,13 +48,13 @@ class BarangModel extends CI_Model {
 		$this->db->select('
 			CASE 
 			WHEN status_gudang = 1 THEN "Sudah Masuk" 
-			WHEN status_gudang = 2 THEN "Sudah Keluar"
 			WHEN status_gudang = 4 THEN "Proses Keluar"
 			END as status_barang', false
 		);
 		$this->db->from('barang_gudang');
 		$this->db->join('barang_masuk', 'barang_masuk.kode_barang = barang_gudang.kode_barang_masuk', 'LEFT');
 		$this->db->where('status_gudang', '1');
+		$this->db->or_where('status_gudang', '4');
 		$this->db->order_by('nama_barang', 'asc');
 		return $this->db->get()->result();
 	}
@@ -64,38 +63,67 @@ class BarangModel extends CI_Model {
 
 	function pengajuan_barang_keluar()
 	{
-		$this->db->select('barang_keluar.*, barang_masuk.nama_barang, barang_masuk.size');
+		$this->db->select('barang_gudang.*, barang_masuk.nama_barang, barang_masuk.size');
 		$this->db->select('
 			CASE
-			WHEN status_keluar = 4 THEN "Proses Keluar"
+			WHEN status_gudang = 4 THEN "Proses Keluar"
 			END as status_barang', false
 		);
-		$this->db->from('barang_keluar');
-		$this->db->join('barang_masuk', 'barang_keluar.kode_barang_keluar = barang_masuk.kode_barang', 'LEFT');
-		$this->db->where('status_keluar', '4');
+		$this->db->from('barang_gudang');
+		$this->db->join('barang_masuk', 'barang_masuk.kode_barang = barang_gudang.kode_barang_masuk', 'LEFT');
+		$this->db->where('status_gudang', '4');
 		$this->db->order_by('nama_barang', 'asc');
 		return $this->db->get()->result();
 	}
 
-	function remove_barang_gudang($data)
+	function add_barang_keluar($data)
 	{
-		return $this->db->insert('barang_gudang', $data);
+		return $this->db->insert('barang_keluar', $data);
 	}
 
-	function validasi_barang_keluar($kode_barang, $jumlah)
+	function keluarkan_barang_gudang($kode_barang, $jumlah)
 	{
-		$cek = $this->db->get_where('barang_masuk', array('kode_barang' => $kode_barang))->row();
+		$cek = $this->db->get_where('barang_gudang', array('kode_barang_masuk' => $kode_barang))->row();
 
 		if ($jumlah < $cek->quantity) {
 			$sisa_jumlah = $cek->quantity - $jumlah;
-			return $this->db->update('barang_masuk', array('status' => 3, 'quantity' => $sisa_jumlah), array('kode_barang' => $kode_barang));
+			return $this->db->update('barang_gudang', array('status_gudang' => 1, 'quantity' => $sisa_jumlah), array('kode_barang_masuk' => $kode_barang));
 		}else{
-			return $this->db->update('barang_masuk', array('status' => 1), array('kode_barang' => $kode_barang));
+			return $this->db->update('barang_gudang', array('status_gudang' => 2), array('kode_barang_masuk' => $kode_barang));
 		}
 		return true;
 	}
 
+// Barang Keluar
 
+	function barang_keluar()
+	{
+		$this->db->select('barang_keluar.*, barang_masuk.nama_barang, barang_masuk.size');
+		$this->db->from('barang_keluar');
+		$this->db->join('barang_masuk', 'barang_masuk.kode_barang = barang_keluar.kode_barang_keluar', 'LEFT');
+		$this->db->order_by('nama_barang', 'asc');
+		return $this->db->get()->result();
+	}
+
+// Jumlah Barang
+
+	public function chart_barang_masuk()
+	{
+		$this->db->select('SUM(quantity) as jumlah_barang_masuk, MONTH(created_at) as daftar_bulan, YEAR(created_at) as daftar_tahun');
+		$this->db->from('barang_masuk');
+		$this->db->where('YEAR(created_at)', date('Y'));
+		$this->db->group_by('daftar_bulan, daftar_tahun');
+		return $this->db->get()->result();
+	}
+
+	public function chart_barang_keluar()
+	{
+		$this->db->select('SUM(quantity) as jumlah_barang_keluar, MONTH(created_at) as daftar_bulan, YEAR(created_at) as daftar_tahun');
+		$this->db->from('barang_keluar');
+		$this->db->where('YEAR(created_at)', date('Y'));
+		$this->db->group_by('daftar_bulan, daftar_tahun');
+		return $this->db->get()->result();
+	}
 }
 
 /* End of file BarangModel.php */

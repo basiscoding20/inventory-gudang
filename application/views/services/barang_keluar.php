@@ -2,7 +2,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-        var pengajuan_barang_keluar = $('#table-pengajuan-barang-keluar').DataTable({
+        var barang_keluar = $('#table-barang-keluar').DataTable({
             autoWidth:true,
             
             language: {
@@ -41,24 +41,30 @@
 
         });
 
-        $('#table-pengajuan-barang-keluar_wrapper .dt-buttons').find('button').each(function () {
+        $('#table-barang-keluar_wrapper .dt-buttons').find('button').each(function () {
         $('button').removeClass('btn-secondary');
         $('button').addClass('btn-outline-white btn-rounded btn-sm px-2');
         });
-        $('#table-pengajuan-barang-keluar_wrapper .dt-buttons').removeClass('btn-group');
-        $('#table-pengajuan-barang-keluar_wrapper .buttons-html5 .button-print').wrapAll('<div class="pfb-group"></div>');
+        $('#table-barang-keluar_wrapper .dt-buttons').removeClass('btn-group');
+        $('#table-barang-keluar_wrapper .buttons-html5 .button-print').wrapAll('<div class="pfb-group"></div>');
         $('.button-custom').html($('.pfb-group').html());
         
         $('.dt-buttons').appendTo('.button-custom');
 
-        $('[name="table-pengajuan-barang-keluar_length"]').addClass('browser-default');
+        $('[name="table-barang-keluar_length"]').addClass('browser-default');
 
-        $('#show-table-pengajuan-barang-keluar').on('click', '.validasi', function() {
+        $('#btn-reset').click(function() {
+        	$('#filter_size').val('');
+        	$('#filter_tanggal').val('');
+        	barang_keluar();
+        });
+
+        $('#show-table-barang-keluar').on('click', '.validasi', function() {
             var kode_barang = $(this).attr('data-kode');
             var quantity = $(this).attr('data-quantity');
 
-            $('#modalKeluarkanBarang').modal('show');
-            $('[name="kode_barang_keluar"]').val(kode_barang);
+            $('#modalValidasiBarangMasuk').modal('show');
+            $('[name="kode_barang"]').val(kode_barang);
             $('[name="quantity"]').attr('max', quantity);
             $('[name="checkAll"]').attr('id', kode_barang);
             $('[name="checkAll"]').val(quantity);
@@ -80,7 +86,7 @@
         $('#kirimValidasi').on('click', function() {
             $('#kirimValidasi').prop('disabled', true);
             $('#kirimValidasi').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span><span class="sr-only">Loading...</span>');
-            var kode_barang = $('[name="kode_barang_keluar"]').val();
+            var kode_barang = $('[name="kode_barang"]').val();
 
             if ($('[name="checkAll"]').is(':checked')) {
                 var quantity = $('[name="checkAll"]').val();
@@ -94,7 +100,7 @@
                 dataType: 'JSON',
                 data: {kode_barang:kode_barang, quantity:quantity},
                 success:function (response) {
-                $('#modalKeluarkanBarang').modal('hide');
+                $('#modalValidasiBarangMasuk').modal('hide');
 
                     if (response.status == 'sukses') {
                       setTimeout(function(){ 
