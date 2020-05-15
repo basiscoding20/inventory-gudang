@@ -1,4 +1,22 @@
  <script>
+  card_jumlah();
+
+  function card_jumlah() {
+    $.ajax({
+      url: '<?= base_url('admin/Dashboard/get_jumlah') ?>',
+      type: 'POST',
+      dataType: 'JSON',
+      success: function (data) {
+        $.each(data, function(jumlah_barang_keluar, jumlah_barang_masuk, jumlah_pengajuan_barang_keluar, jumlah_pengajuan_barang_masuk) {
+          console.log(data.jumlah_barang_masuk);
+          $('#jumlah_barang_masuk').html(data.jumlah_barang_masuk);
+          $('#jumlah_barang_keluar').html(data.jumlah_barang_keluar);
+          $('#jumlah_pengajuan_barang_masuk').html(data.jumlah_pengajuan_barang_masuk);
+          $('#jumlah_pengajuan_barang_keluar').html(data.jumlah_pengajuan_barang_keluar);
+        });
+      }
+    });
+  }
   var bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktpber', 'November', 'Desember']
   // Masuk chart
     $.ajax({
@@ -60,8 +78,8 @@
     });
     
       
-   // Keluar chart
-     $.ajax({
+ // Keluar chart
+    $.ajax({
       url: '<?= base_url('admin/dashboard/get_jumlah') ?>',
       type: 'POST',
       dataType: 'JSON',
@@ -118,6 +136,7 @@
         });
       }
     });
+
   </script>
 </body>
 </html>

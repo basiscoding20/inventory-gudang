@@ -30,6 +30,7 @@ class Barang extends CI_Controller {
 		$data['kode_barang_masuk'] = $this->input->post('kode_barang');
 		$data['created_at'] = date('Y-m-d h:i:sa');
 		$data['created_by'] = $this->session->userdata('id');
+		$data['status_gudang'] = 1;
 		$kode_barang = $this->input->post('kode_barang');
 		$jumlah = $this->input->post('quantity');
 
@@ -53,6 +54,13 @@ class Barang extends CI_Controller {
 		echo json_encode($response);
 
 	}	
+
+	public function validasi_barang()
+	{
+		$kode = $this->uri->segment(4);
+		$data['barang']= $this->BarangModel->get_by_kode($kode);
+		$this->load->view('admin/validasi_barang', $data);
+	}
 // Barang Gudang
 	public function barang_masuk()
 	{

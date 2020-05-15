@@ -20,7 +20,7 @@
                 <i class="far fa-money-bill-alt primary-color mr-3 z-depth-2"></i>
                 <div class="data">
                   <p class="text-uppercase">barang masuk</p>
-                  <h4 class="font-weight-bold dark-grey-text">2000$</h4>
+                  <h4 class="font-weight-bold dark-grey-text" id="jumlah_barang_masuk"></h4>
                 </div>
               </div>
 
@@ -41,7 +41,7 @@
                 <i class="fas fa-chart-line warning-color mr-3 z-depth-2"></i>
                 <div class="data">
                   <p class="text-uppercase">barang keluar</p>
-                  <h4 class="font-weight-bold dark-grey-text">200</h4>
+                  <h4 class="font-weight-bold dark-grey-text" id="jumlah_barang_keluar"></h4>
                 </div>
               </div>
 
@@ -62,7 +62,7 @@
                 <i class="fas fa-chart-pie light-blue lighten-1 mr-3 z-depth-2"></i>
                 <div class="data">
                   <p class="text-uppercase">pengajuan <span class="badge badge-warning d-block">barang masuk</span></p>
-                  <h4 class="font-weight-bold dark-grey-text">20000</h4>
+                  <h4 class="font-weight-bold dark-grey-text" id="jumlah_pengajuan_barang_masuk"></h4>
                 </div>
               </div>
 
@@ -83,7 +83,7 @@
                 <i class="fas fa-chart-bar red accent-2 mr-3 z-depth-2"></i>
                 <div class="data">
                   <p class="text-uppercase">pengajuan <span class="badge badge-warning d-block">barang keluar</span></p>
-                  <h4 class="font-weight-bold dark-grey-text">2000</h4>
+                  <h4 class="font-weight-bold dark-grey-text" id="jumlah_pengajuan_barang_keluar"></h4>
                 </div>
               </div>
 

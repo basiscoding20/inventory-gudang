@@ -3,7 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class BarangModel extends CI_Model {
 
-// Pengajuan Barang Masuk
+	function get_by_kode($kode)
+	{
+		return $this->db->get_where('barang_masuk', array('kode_barang' => $kode))->row();
+	}
+
+// Tampil Pengajuan Barang Masuk
 
 	function pengajuan_barang_masuk()
 	{
@@ -59,7 +64,7 @@ class BarangModel extends CI_Model {
 		return $this->db->get()->result();
 	}
 
-// Pengajuan Barang Masuk
+// Tampil Pengajuan Barang Keluar
 
 	function pengajuan_barang_keluar()
 	{
@@ -107,7 +112,7 @@ class BarangModel extends CI_Model {
 
 // Jumlah Barang
 
-	public function chart_barang_masuk()
+	function chart_barang_masuk()
 	{
 		$this->db->select('SUM(quantity) as jumlah_barang_masuk, MONTH(created_at) as daftar_bulan, YEAR(created_at) as daftar_tahun');
 		$this->db->from('barang_masuk');
@@ -116,13 +121,89 @@ class BarangModel extends CI_Model {
 		return $this->db->get()->result();
 	}
 
-	public function chart_barang_keluar()
+	function chart_barang_keluar()
 	{
 		$this->db->select('SUM(quantity) as jumlah_barang_keluar, MONTH(created_at) as daftar_bulan, YEAR(created_at) as daftar_tahun');
 		$this->db->from('barang_keluar');
 		$this->db->where('YEAR(created_at)', date('Y'));
 		$this->db->group_by('daftar_bulan, daftar_tahun');
 		return $this->db->get()->result();
+	}
+
+	function jumlah_barang_masuk()
+	{
+		$this->db->select('COUNT(id) as jumlah_barang_masuk');
+		$this->db->from('barang_gudang');
+		$this->db->where('status_gudang', 1);
+		return $this->db->get()->row();
+	}
+
+	function jumlah_barang_keluar()
+	{
+		$this->db->select('COUNT(id) as jumlah_barang_keluar');
+		$this->db->from('barang_keluar');
+		return $this->db->get()->row();
+	}
+
+	function jumlah_pengajuan_barang_masuk()
+	{
+		$this->db->select('COUNT(id_barang) as jumlah_pengajuan_barang_masuk');
+		$this->db->from('barang_masuk');
+		$this->db->where('status', 0);
+		return $this->db->get()->row();
+	}
+
+	function jumlah_pengajuan_barang_keluar()
+	{
+		$this->db->select('COUNT(id) as jumlah_pengajuan_barang_keluar');
+		$this->db->from('barang_gudang');
+		$this->db->where('status_gudang', 4);
+		return $this->db->get()->row();
+	}
+
+// Buat Kode Barang
+
+	function get_kode_barang()
+	{
+		$q = $this->db->query("SELECT MAX(RIGHT(kode_barang,4)) AS kd_max FROM barang_masuk WHERE DATE(created_at)=CURDATE()");
+        $kd = "";
+        if($q->num_rows()>0){
+            foreach($q->result() as $k){
+                $tmp = ((int)$k->kd_max)+1;
+                $kd = sprintf("%04s", $tmp);
+            }
+        }else{
+            $kd = "0001";
+        }
+        date_default_timezone_set('Asia/Jakarta');
+        return date('dmy').$kd;
+	}
+// Add Pengajuan Barang Masuk
+
+	function add_barang_masuk($data)
+	{
+		return $this->db->insert('barang_masuk', $data);
+	}
+
+// Edit Pengajuan Barang Masuk
+
+	function edit_barang_masuk($kode, $data)
+	{
+		return $this->db->update('barang_masuk', $data, array('kode_barang' => $kode));
+	}
+
+// Add Pengajuan Barang Keluar
+
+	function add_pengajuan_barang_keluar()
+	{
+		return $this->db->update('barang_gudang', array('status_gudang' => 4));
+	}
+
+// Edit Pengajuan Barang Keluar
+
+	function edit_pengajuan_barang_keluar($kode, $data)
+	{
+		return $this->db->update('barang_gudang', $data, array('kode_barang_masuk' => $kode));
 	}
 }
 
